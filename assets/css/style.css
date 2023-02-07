@@ -1,0 +1,25 @@
+.weather-header {
+    background-image: linear-gradient( #3161b9, #4f4177);
+    background-color: #3763b6;
+}
+  
+#search-button {
+border-radius: 5px;
+background-color: #4a83ee;
+border: none;
+width: auto;
+color: aliceblue;
+}
+
+.input-group {
+  flex-direction: column;
+}
+
+.form-inline {
+  align-items: stretch;
+  flex-direction: column;
+}
+
+.container-fluid{
+  padding: 0;
+}

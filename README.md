@@ -14,5 +14,9 @@ The current and future weather conditions will be displayed or is the user click
 
 ## Links and screenshot:
 
+![image](https://user-images.githubusercontent.com/117821906/217367735-d1593591-49a0-40c3-a653-1b734d258a2e.png)
 
 
+https://mihais1988.github.io/Weather-dashboard/ (Webpage)
+
+https://github.com/MihaiS1988/Weather-dashboard (GitHub repository)

@@ -15,4 +15,4 @@ The current and future weather conditions will be displayed or is the user click
 ## Links and screenshot:
 
 
-Click the link to access the webpage
+

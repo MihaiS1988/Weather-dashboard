@@ -1,4 +1,4 @@
-//Variable declaration to store the searched city
+/Variable declaration to store the searched city
 const city = "";
 //Variable declaration
 let citySearch = $("#city-search");
@@ -11,32 +11,33 @@ let sCity = [];
 
 //Set up the API Key
 const APIKey= "54d3a805e424461225026475cb614abb";
+let hourSlot = Math.floor(currentHour/3);
 
+for(let i = 0; i < 5; i++) {
+    let slotNumber = hourSlot + i * 8;
 
-function displayForecast(data) {
-    for (let i = 0; i < data.list.length; i++) {
-        if (i === 0) {
+   
+    // Declaration of variables to store weather data
+    let tempData = (response.list[slotNumber].main.temp -273.15).toFixed(2);
+    let windData = (response.list[slotNumber].wind.speed * 2.23694).toFixed(1);
+    let weatherIconId = response.list[slotNumber].weather[0].icon;
+    let iconURL = 'https://openweathermap.org/img/wn/'+ weatherIconId + '@2x.png'
+    // console.log(tempData + "   " + windData);
+    // console.log(iconURL);
 
-            date = moment.unix(data.list[i].dt).format("DD/MM/YYYY");
-            let li = "<ul id='current_date' class='day'> <li id='city_name' > " + locationName + " </li>   <li id='date' class='forecast date'> " + date + " </li>   <li id='icon' class='forecast '> <img class='icon' src='http://openweathermap.org/img/wn/" + data.list[i].weather[0].icon + "@2x.png' " +
-                " </li>  <li id='humidity' class='forecast'> Humidity : " + data.list[i].humidity +
-                "</li>     <li id=''temp  class='forecast temp'> Temp: " + data.list[i].temp.day +
-                "'\u2103'</li>     <li id='wind'  class='forecast speed'> Wind: " + data.list[i].speed +
-                "km/h</li>  </ul> ";
-            $("#today").append(li);
-
-        } else {
-            date = moment.unix(data.list[i].dt).format("DD/MM/YYYY");
-
-            let li = "<ul class='day'> <li class='forecast date'> " + date + " </li>   <li  class='forecast '> <img class='icon' src='http://openweathermap.org/img/wn/" + data.list[i].weather[0].icon + "@2x.png' " +
-                " </li>  <li class='forecast'> Humidity : " + data.list[i].humidity +
-                "</li>     <li  class='forecast temp'> Temp: " + data.list[i].temp.day +
-                "'\u2103'</li>     <li  class='forecast speed'> Wind: " + data.list[i].speed +
-                "km/h</li>  </ul> ";
-            $("#forecast").append(li);
-        }
-    }
+    let showDate = moment().add('days', i+1).format('DD/MM/YYYY');
+    // console.log(showDate);
+    const cardDiv = $('<div>').addClass('card col-10 col-sm-2 bg-info m-2');
+    const showDateEl= $('<h5>').text(showDate);
+    const iconEl = $('<img>').attr('src', iconURL);
+    const tempDataEl = $('<p>').text('Temp: ' + tempData + '℃');
+    const windDataEl = $('<p>').text('Wind: ' + windData + ' KPH');
+    const humidityEl = $('<p>').text('Humidity: ' + response.list[slotNumber].main.humidity + ' %')
+    
+    cardDiv.append(showDateEl, iconEl, tempDataEl, windDataEl, humidityEl);
+    $('#forecast').append(cardDiv);
 }
+
 //Function to search the city to see if it exist in the storage entries
 function find(c){
     for (var i=0; i<sCity.length; i++);
@@ -45,7 +46,7 @@ function find(c){
     }
     return 1;
 }
-
+    
 function currentWeather(city){
     // Here we build the URL so we can get a data from server side.
     var queryURL= "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=" + APIKey;

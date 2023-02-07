@@ -11,11 +11,10 @@ let sCity = [];
 
 //Set up the API Key
 const APIKey= "54d3a805e424461225026475cb614abb";
-let hourSlot = Math.floor();
 
 //Function to search the city to see if it exist in the storage entries
 function find(c){
-    for (var i=0; i<sCity.length; i++);
+    for (let i=0; i<sCity.length; i++);
     if(c.toUpperCase()===sCity[i]){
         return -1;
     }
@@ -24,7 +23,7 @@ function find(c){
     
 function currentWeather(city){
     // Here we build the URL so we can get a data from server side.
-    var queryURL= "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=" + APIKey;
+    let queryURL= "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&APPID=" + APIKey;
     $.ajax({
         url:queryURL,
         method:"GET",
@@ -33,22 +32,22 @@ function currentWeather(city){
         // parse the response to display the current weather including the City name. the Date and the weather icon. 
         console.log(response);
         //Dta object from server side Api for icon property.
-        var weathericon= response.weather[0].icon;
-        var iconurl="https://openweathermap.org/img/wn/"+weathericon +"@2x.png";
+        let weathericon= response.weather[0].icon;
+        let iconurl="https://openweathermap.org/img/wn/"+ weathericon +"@2x.png";
         // The date format method is taken from the  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
-        var date=new Date(response.dt*1000).toLocaleDateString();
+        let date=new Date(response.dt*1000).toLocaleDateString();
         //parse the response for name of city and concanatig the date and icon.
         $(currentCity).html(response.name +"("+date+")" + "<img src="+iconurl+">");
         // parse the response to display the current temperature.
         // Convert the temp to fahrenheit
 
-        var tempF = (response.main.temp - 273.15) * 1.80 + 32;
+        let tempF = (response.main.temp - 273.15) * 1.80 + 32;
         $(currentTemperature).html((tempF).toFixed(2)+"&#8457");
         // Display the Humidity
         $(currentHumidty).html(response.main.humidity+"%");
         //Display Wind speed and convert to MPH
-        var ws=response.wind.speed;
-        var windsmph=(ws*2.237).toFixed(1);
+        let ws=response.wind.speed;
+        let windsmph=(ws*2.237).toFixed(1);
         $(currentWSpeed).html(windsmph+"MPH");
     
         forecast(response.id);
@@ -71,6 +70,33 @@ function currentWeather(city){
             }
         }
 
+    });
+}
+
+
+
+function forecast(cityid){
+    let dayover= false;
+    let queryforcastURL="https://api.openweathermap.org/data/2.5/forecast?id="+cityid+"&appid="+APIKey;
+    $.ajax({
+        url:queryforcastURL,
+        method:"GET"
+    }).then(function(response){
+        
+        for (i=0;i<5;i++){
+            let date= new Date((response.list[((i+1)*8)-1].dt)*1000).toLocaleDateString();
+            let iconcode= response.list[((i+1)*8)-1].weather[0].icon;
+            let iconurl="https://openweathermap.org/img/wn/"+iconcode+".png";
+            let tempK= response.list[((i+1)*8)-1].main.temp;
+            let tempF=(((tempK-273.5)*1.80)+32).toFixed(2);
+            let humidity= response.list[((i+1)*8)-1].main.humidity;
+        
+            $("#fDate"+i).html(date);
+            $("#fImg"+i).html("<img src="+iconurl+">");
+            $("#fTemp"+i).html(tempF+"&#8457");
+            $("#fHumidity"+i).html(humidity+"%");
+        }
+        
     });
 }
 

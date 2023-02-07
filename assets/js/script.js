@@ -1,4 +1,4 @@
-/Variable declaration to store the searched city
+//Variable declaration to store the searched city
 const city = "";
 //Variable declaration
 let citySearch = $("#city-search");
@@ -11,32 +11,7 @@ let sCity = [];
 
 //Set up the API Key
 const APIKey= "54d3a805e424461225026475cb614abb";
-let hourSlot = Math.floor(currentHour/3);
-
-for(let i = 0; i < 5; i++) {
-    let slotNumber = hourSlot + i * 8;
-
-   
-    // Declaration of variables to store weather data
-    let tempData = (response.list[slotNumber].main.temp -273.15).toFixed(2);
-    let windData = (response.list[slotNumber].wind.speed * 2.23694).toFixed(1);
-    let weatherIconId = response.list[slotNumber].weather[0].icon;
-    let iconURL = 'https://openweathermap.org/img/wn/'+ weatherIconId + '@2x.png'
-    // console.log(tempData + "   " + windData);
-    // console.log(iconURL);
-
-    let showDate = moment().add('days', i+1).format('DD/MM/YYYY');
-    // console.log(showDate);
-    const cardDiv = $('<div>').addClass('card col-10 col-sm-2 bg-info m-2');
-    const showDateEl= $('<h5>').text(showDate);
-    const iconEl = $('<img>').attr('src', iconURL);
-    const tempDataEl = $('<p>').text('Temp: ' + tempData + '℃');
-    const windDataEl = $('<p>').text('Wind: ' + windData + ' KPH');
-    const humidityEl = $('<p>').text('Humidity: ' + response.list[slotNumber].main.humidity + ' %')
-    
-    cardDiv.append(showDateEl, iconEl, tempDataEl, windDataEl, humidityEl);
-    $('#forecast').append(cardDiv);
-}
+let hourSlot = Math.floor();
 
 //Function to search the city to see if it exist in the storage entries
 function find(c){
@@ -98,3 +73,4 @@ function currentWeather(city){
 
     });
 }
+
